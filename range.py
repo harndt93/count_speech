@@ -24,22 +24,20 @@ def print_input():
         print("\nSelect a language, E for English or P for Portuguese.")
         v = input("E/P: ")
 
-    if v.upper() == 'E':
+    if v.upper() == 'E': # If v sames as 'E'
         # Use female English voice
         engine.setProperty('voice', en_voice_id)
-        l = "And the last number..."
         b = "Thanks, thats all."
-        speech_numbers(t,l,b)
-    elif v.upper() == 'P':
+        speech_numbers(t,b)
+    elif v.upper() == 'P': # If v same as 'P'
         # Use female Brazilian voice
         engine.setProperty('voice', br_voice_id)
-        l = "E o último número..."
         b = "Obrigada, isto é tudo."
-        speech_numbers(t,l,b)
+        speech_numbers(t,b)
     else:
         print("Sorry, I don't recgonize %s as an option." % (v))
 
-def speech_numbers(t,l,b):
+def speech_numbers(t,b):
     # List 5000 random numbers between 0 and 100.
     r = random.sample(range(5000), 5000)
 
