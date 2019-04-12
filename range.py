@@ -14,8 +14,6 @@ engine = pyttsx3.init()
 en_voice_id = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0"
 br_voice_id = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_PT-BR_MARIA_11.0"
 
-flag = True
-
 def print_input():
     # Get a time input, and decide a voice language
     try:
@@ -32,26 +30,23 @@ def print_input():
         l = "And the last number..."
         b = "Thanks, thats all."
         speech_numbers(t,l,b)
-        flag = True
     elif v.upper() == 'P':
         # Use female Brazilian voice
         engine.setProperty('voice', br_voice_id)
         l = "E o último número..."
         b = "Obrigada, isto é tudo."
         speech_numbers(t,l,b)
-        flag = True
     else:
         print("Sorry, I don't recgonize %s as an option." % (v))
-        flag = False
-    return flag
 
 def speech_numbers(t,l,b):
-    # Create 100 random numbers between 0 and 100.
+    # List 5000 random numbers between 0 and 100.
     r = random.sample(range(5000), 5000)
 
     # Create an index = 0
     i = 0
-    # While loop to speech number
+    
+    # While loop to speech numbers
     while t != 0:
         print(r[i])
         engine.say(r[i])
@@ -62,9 +57,16 @@ def speech_numbers(t,l,b):
     engine.say(b)
     engine.runAndWait()
 
+def shutdown():
+    return False
+
 ### Main ###
 print("##############################################")
 print("#############  Count me to Sleep  ############")
 print("##############################################")
+
+flag = True
+
 while flag is True:
     print_input()
+    flag = shutdown()
