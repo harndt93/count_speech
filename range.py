@@ -14,44 +14,57 @@ engine = pyttsx3.init()
 en_voice_id = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0"
 br_voice_id = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_PT-BR_MARIA_11.0"
 
-# Get a time input, and decide a voice language
-#try:
-t = int(input("How long do you want me to count? "))
-#except ValueError:
-#    print("Sorry, I only accept numbers for that question.")
-#else:
-print("Select a language, E for English or P for Portuguese.")
-v = input("E/P: ")
+flag = True
 
-if v.upper() == 'E':
-    # Use female English voice
-    engine.setProperty('voice', en_voice_id)
-    l = "And the last number..."
-    b = "Thanks, thats all."
-elif v.upper() == 'P':
-    # Use female Brazilian voice
-    engine.setProperty('voice', br_voice_id)
-    l = "E o último número..."
-    b = "Obrigada, isto é tudo."
-else:
-    print("Sorry, I don't recgonize %s as an option." % (v))
-        
-# Create 100 random numbers between 0 and 100.
-r = random.sample(range(5000), 5000)
+def print_input():
+    # Get a time input, and decide a voice language
+    try:
+        t = int(input("\nHow long do you want me to count?"))
+    except ValueError:
+        print("Sorry, I only accept numbers for that question.")
+    else:
+        print("\nSelect a language, E for English or P for Portuguese.")
+        v = input("E/P: ")
 
-# Create an index = 0
-i = 0
+    if v.upper() == 'E':
+        # Use female English voice
+        engine.setProperty('voice', en_voice_id)
+        l = "And the last number..."
+        b = "Thanks, thats all."
+        speech_numbers(t,l,b)
+        flag = True
+    elif v.upper() == 'P':
+        # Use female Brazilian voice
+        engine.setProperty('voice', br_voice_id)
+        l = "E o último número..."
+        b = "Obrigada, isto é tudo."
+        speech_numbers(t,l,b)
+        flag = True
+    else:
+        print("Sorry, I don't recgonize %s as an option." % (v))
+        flag = False
+    return flag
 
-# While loop to speech number
-while t != 0:
-    print(r[i])
-    engine.say(r[i])
+def speech_numbers(t,l,b):
+    # Create 100 random numbers between 0 and 100.
+    r = random.sample(range(5000), 5000)
+
+    # Create an index = 0
+    i = 0
+    # While loop to speech number
+    while t != 0:
+        print(r[i])
+        engine.say(r[i])
+        engine.runAndWait()
+        time.sleep(1)
+        i += 1
+        t -= 1
+    engine.say(b)
     engine.runAndWait()
-    time.sleep(1)
-    i += 1
-    t -= 1
-#print(r[-1])
-#engine.say(l)
-#engine.say(r[-1])
-engine.say(b)
-engine.runAndWait()
+
+### Main ###
+print("##############################################")
+print("#############  Count me to Sleep  ############")
+print("##############################################")
+while flag is True:
+    print_input()
