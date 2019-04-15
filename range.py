@@ -18,14 +18,22 @@ en_voice_id = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS
 br_voice_id = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_PT-BR_MARIA_11.0"
 
 def print_input():
-    # Get a time input, and decide a voice language
-    try:
-        t = int(input("\nHow long do you want me to count (in minutes)? "))
-    except ValueError:
-        print("Sorry, I only accept numbers for that question.")
-    else:
-        print("\nSelect a language, E for English or P for Portuguese (BR).")
-        v = input("E/P: ")
+    # Get a numeric time input
+    while True:
+        try:
+            t = int(input("\nHow long do you want me to count (in minutes)? Or enter 0 to exit: "))
+            if t == 0:
+                pass
+            else:
+                break
+        except ValueError as error:
+            print("\n###################  Error  ###################")
+            print("Sorry, I only accept numbers for that question.")
+            print(error)
+            
+    # Select voice language
+    print("\nSelect a language, E for English or P for Portuguese (BR).")
+    v = input("E/P: ")
 
     if v.upper() == 'E': # If v same as E
         # Use female English voice
@@ -63,7 +71,7 @@ def speech_numbers(t,b):
     engine.runAndWait()
 
 def timeout(t):
-    # Calculate a time minute based
+    # Calculate a time minute
     t_out = time.time() + 60 * t # 60 * t is our time in minutes.
     return t_out
 
